@@ -23,7 +23,7 @@ None
 Example Playbook
 ----------------
 
-Use this roles with Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+Scope and settings can, but do not have to be input.
 
     - hosts: localhost
       roles:
