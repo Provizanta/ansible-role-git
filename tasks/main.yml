@@ -1,0 +1,28 @@
+---
+
+- name: establish 'git' package
+  become: yes
+  package: 
+    name: git
+    state: latest
+
+- name: establish dependencies enforced by settings
+  become: yes
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ used_tools }}"
+ 
+- name: set up global .gitignore
+  copy:
+    src: .gitignore_global
+    dest: ~/.gitignore_global    
+    owner: "{{ ansible_user }}"
+    mode: "u=rwx,go=rx"
+
+- name: configure git settings
+  git_config:
+    name: "{{ item.setting }}"
+    scope: "{{ scope }}"
+    value: "{{ item.value  }}"
+  with_items: "{{ collapsed_settings }}"

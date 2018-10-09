@@ -1,0 +1,15 @@
+{%- macro collapse(new_key, new_value, prefix, pairs) -%}
+  {%- if new_value is mapping -%}
+    {%- for key, value in new_value.iteritems() -%}
+      {{- collapse(key, value, prefix + '.' + key, pairs) -}}
+    {%- endfor -%}
+  {%- else -%}
+    {%- set ignore = pairs.append( {'setting': prefix, 'value': new_value}) -%}
+  {%- endif -%}
+{%- endmacro -%}
+
+{% set pairs = [] -%}
+{%- for key, value in settings.iteritems() -%}
+  {{- collapse(key, value, key, pairs) -}}
+{%- endfor -%}
+{{ pairs }}
