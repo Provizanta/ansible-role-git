@@ -28,7 +28,7 @@ settings:
   difftool:
     prompt: false
   format:
-    pretty: oneline
+    pretty: 'medium'
   grep:
     lineNumber: true
     patternType: 'extended'
