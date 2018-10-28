@@ -11,9 +11,8 @@ None
 Role Variables
 --------------
 
-scope - scope of the git configuration (e.g. global)
-
-settings - any git config settings in a yaml dictionary formt (e.g. core.editor: 'vim')
+    scope: scope of the git configuration
+    settings: any git config settings in a yaml dictionary format
 
 Dependencies
 ------------
@@ -26,16 +25,16 @@ Example Playbook
 Scope and settings can, but do not have to be input.
 
     - hosts: localhost
-      roles:
-         - git
-      vars:
-        scope: local
-        settings:
-          user:
-            name: "Name Surname"
-            email: "name@surname.com"
-          core:
-            editor: vim
+      roles: 
+        role: git
+        vars:
+          scope: local
+          settings:
+            user:
+              name: "Name Surname"
+              email: "name@surname.com"
+            core:
+              editor: vim
 
 License
 -------
