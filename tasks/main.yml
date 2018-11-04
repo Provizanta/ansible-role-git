@@ -33,3 +33,5 @@
     dest: "{{ '/etc/bash_completion.d/ ' if ansible_system == 'Linux' else '/opt/local/etc/bash_completion.d/' }}"
     mode: "u=rwx,go="
     owner: "{{ ansible_user }}"
+  when:
+    - ansible_system == 'Linux' or ansible_system == 'Darwin'
