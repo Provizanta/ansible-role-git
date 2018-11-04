@@ -26,3 +26,10 @@
     scope: "{{ scope }}"
     value: "{{ item.value  }}"
   with_items: "{{ collapsed_settings }}"
+
+- name: establish bash completion
+  get_url:
+    url: "https://github.com/git/git/blob/master/contrib/completion/git-completion.bash"
+    dest: "{{ '/etc/bash_completion.d/ ' if ansible_system == 'Linux' else '/opt/local/etc/bash_completion.d/' }}"
+    mode: "u=rwx,go="
+    owner: "{{ ansible_user }}"

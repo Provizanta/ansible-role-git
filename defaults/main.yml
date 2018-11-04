@@ -4,6 +4,7 @@ settings:
   alias:
     head: 'log --graph --pretty=tformat:"%Cblue %h %Cgreen %ad %Cred %an %Creset %s %Cblue%d%Creset" --abbrev-commit --decorate --parents --date=short -n32'
     last: 'log -1 HEAD'
+    unstage: 'reset HEAD --'
   blame:
     coloring: "highlightRecent" 
   color:
