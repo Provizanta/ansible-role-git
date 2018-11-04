@@ -15,7 +15,7 @@
  
 - name: set up global .gitignore
   copy:
-    src: .gitignore_global
+    src: gitignore_global
     dest: ~/.gitignore_global    
     owner: "{{ ansible_user }}"
     mode: "u=rwx,go=rx"
@@ -24,14 +24,25 @@
   git_config:
     name: "{{ item.setting }}"
     scope: "{{ scope }}"
-    value: "{{ item.value  }}"
+    value: "{{ item.value }}"
   with_items: "{{ collapsed_settings }}"
 
-- name: establish bash completion
-  get_url:
-    url: "https://github.com/git/git/blob/master/contrib/completion/git-completion.bash"
-    dest: "{{ '/etc/bash_completion.d/ ' if ansible_system == 'Linux' else '/opt/local/etc/bash_completion.d/' }}"
-    mode: "u=rwx,go="
-    owner: "{{ ansible_user }}"
+- block:
+  - name: establish git bash completion file presence
+    stat:
+      path: "{{ destination }}"
+    register: git_completion
+       
+  - name: establish git bash completion
+    become: yes
+    get_url:
+      url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
+      dest: "{{ destination }}"
+      mode: "u=rwx,go="
+      owner: "{{ ansible_user }}"
+    when: not git_completion.stat.exists
+
+  vars:
+    destination: "{{ '/etc/bash_completion.d/' if ansible_system == 'Linux' else '/opt/local/etc/bash_completion.d/' }}/git-completion.bash"
   when:
     - ansible_system == 'Linux' or ansible_system == 'Darwin'
