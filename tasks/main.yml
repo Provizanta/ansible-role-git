@@ -3,8 +3,11 @@
 - name: establish 'git' package
   become: yes
   package: 
-    name: git
+    name: "{{ item }}" 
     state: latest
+  with_items:
+    - git
+    - bash-completion
 
 - name: establish dependencies enforced by settings
   become: yes
@@ -27,22 +30,3 @@
     value: "{{ item.value }}"
   with_items: "{{ collapsed_settings }}"
 
-- block:
-  - name: establish git bash completion file presence
-    stat:
-      path: "{{ destination }}"
-    register: git_completion
-       
-  - name: establish git bash completion
-    become: yes
-    get_url:
-      url: "https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash"
-      dest: "{{ destination }}"
-      mode: "u=rwx,go="
-      owner: "{{ ansible_user }}"
-    when: not git_completion.stat.exists
-
-  vars:
-    destination: "/opt/local/etc/bash_completion.d/git-completion.bash"
-  when:
-    - ansible_system == 'Darwin'
