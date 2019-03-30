@@ -1,32 +1,35 @@
 ---
 
-- name: establish 'git' package
+- name: establish package
   become: yes
   package: 
-    name: "{{ item }}" 
+    name: git 
     state: latest
-  with_items:
-    - git
-    - bash-completion
+  tags: install
 
 - name: establish dependencies enforced by settings
   become: yes
   package:
-    name: "{{ item }}"
+    name: "{{ lookup('template', './tools_list.j2') | unique }}"
     state: present
-  with_items: "{{ used_tools }}"
+  tags: install
  
-- name: set up global .gitignore
-  copy:
-    src: gitignore_global
-    dest: ~/.gitignore_global    
+- name: establish global .gitignore
+  when: global_gitignore is defined 
+  lineinfile:
+    line: "{{ item }}"
+    path: ~/.gitignore_global    
     owner: "{{ ansible_user }}"
     mode: "u=rwx,go=rx"
+    create: yes
+  loop: "{{ global_gitignore }}"
+  tags: configure
 
-- name: configure git settings
+- name: establish configuration
   git_config:
     name: "{{ item.setting }}"
     scope: "{{ scope }}"
     value: "{{ item.value }}"
-  with_items: "{{ collapsed_settings }}"
+  loop: "{{ lookup('template', './settings_with_keys_collapsed_to_path.j2') }}"
+  tags: configure
 

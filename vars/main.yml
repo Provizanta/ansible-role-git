@@ -4,6 +4,3 @@ external_tools:
   - 'diff.tool'
   - 'merge.tool'
 
-used_tools: "{{ lookup('template', './tools_list.j2') | unique }}"
-
-collapsed_settings: "{{ lookup('template', './settings_with_keys_collapsed_to_path.j2') }}"

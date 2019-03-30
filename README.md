@@ -11,8 +11,9 @@ None
 Role Variables
 --------------
 
-    scope: scope of the git configuration
-    settings: any git config settings in a yaml dictionary format
+    scope:  <scope of the git configuration>
+    global_gitignore: <lines for the global gitignore file>
+    configuration: <git config settings in a yaml dictionary format>
 
 Dependencies
 ------------
