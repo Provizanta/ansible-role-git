@@ -18,7 +18,7 @@
   when: global_gitignore is defined 
   lineinfile:
     line: "{{ item }}"
-    path: ~/.gitignore_global    
+    path: "{{ lookup('env','HOME') }}/.gitignore_global" 
     owner: "{{ ansible_user }}"
     mode: "u=rwx,go=rx"
     create: yes
@@ -27,9 +27,9 @@
 
 - name: establish configuration
   git_config:
-    name: "{{ item.setting }}"
+    name: "{{ item['setting']}}"
     scope: "{{ scope }}"
-    value: "{{ item.value }}"
+    value: "{{ item['value'] }}"
   loop: "{{ lookup('template', './settings_with_keys_collapsed_to_path.j2') }}"
   tags: configure
 

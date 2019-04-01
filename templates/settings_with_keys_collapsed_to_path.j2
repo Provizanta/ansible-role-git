@@ -9,7 +9,7 @@
 {%- endmacro -%}
 
 {% set pairs = [] -%}
-{%- for key, value in settings.items() -%}
+{%- for key, value in configuration.items() -%}
   {{- collapse(key, value, key, pairs) -}}
 {%- endfor -%}
 {{ pairs }}
