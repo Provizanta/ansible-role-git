@@ -18,7 +18,7 @@
   when: global_gitignore is defined 
   lineinfile:
     line: "{{ item }}"
-    path: "{{ lookup('env','HOME') }}/.gitignore_global" 
+    path: "{{ configuration['core']['excludesfile'] | default(lookup('env','HOME') + '/.gitignore_global') }}" 
     owner: "{{ ansible_user }}"
     mode: "u=rwx,go=rx"
     create: yes
