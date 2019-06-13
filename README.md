@@ -1,6 +1,8 @@
 Ansible role: git
 =========
 
+[![Build Status](https://travis-ci.com/Provizanta/ansible-role-git.svg?branch=master)](https://travis-ci.com/Provizanta/ansible-role-git)
+
 Setup `git` along with a specified configuration. If no configuration is specified, a limited minimal configuration is loaded to setup global gitignore policies.
 
 Requirements

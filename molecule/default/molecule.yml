@@ -20,6 +20,9 @@ provisioner:
   name: ansible
   lint:
     name: ansible-lint
+    options:
+      x:
+        - 303
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
 verifier:

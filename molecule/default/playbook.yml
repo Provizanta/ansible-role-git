@@ -6,12 +6,16 @@
     - role: git
       vars:
         scope: global
+        configuration:
+          core:
+            excludesfile: "/tmp/gitignore"
 
   post_tasks:
     - name: check 'git' presence
       block:
         - name: attempt to use 'git' command
           command: 'git --version'
+          changed_when: false
           register: r
         - name: evaluate command presence
           assert:
