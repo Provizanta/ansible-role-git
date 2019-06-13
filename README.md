@@ -1,7 +1,7 @@
-Git
+Ansible role: git
 =========
 
-Setup 'git' along with a specified configuration. If no configuration is specified, the default configuration is applied.
+Setup `git` along with a specified configuration. If no configuration is specified, a limited minimal configuration is loaded to setup global gitignore policies.
 
 Requirements
 ------------
@@ -11,9 +11,11 @@ None
 Role Variables
 --------------
 
-    scope:  <scope of the git configuration>
-    global_gitignore: <lines for the global gitignore file>
-    configuration: <git config settings in a yaml dictionary format>
+Optional variables:
+
+    scope: <enum global|local, scope of the git configuration>
+    global_gitignore: <list, lines for the global gitignore file>
+    configuration: <git configuration in YAML format>
 
 Dependencies
 ------------
@@ -23,14 +25,12 @@ None
 Example Playbook
 ----------------
 
-Scope and settings can, but do not have to be input.
-
     - hosts: localhost
-      roles: 
+      roles:
         role: git
         vars:
           scope: local
-          settings:
+          configuration:
             user:
               name: "Name Surname"
               email: "name@surname.com"
@@ -45,4 +45,4 @@ MIT
 Author Information
 ------------------
 
-Tibor Csoka
+Tibor Csóka

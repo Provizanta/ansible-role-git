@@ -1,6 +1,7 @@
+---
+
 external_tools:
   - 'core.editor'
   - 'core.pager'
   - 'diff.tool'
   - 'merge.tool'
-

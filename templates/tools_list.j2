@@ -1,19 +1,18 @@
-{%- macro test_presence(path, items) -%} 
+{%- macro test_presence(path, items) -%}
   {%- set head = { 'value': configuration } -%}
-  {%- for key in path.split('.') -%} 
+  {%- for key in path.split('.') -%}
     {%- set ingore = head.__setitem__("value", head['value'].get(key, {})) -%}
-  {%- endfor -%} 
-  {%- if head.get('value') -%} 
+  {%- endfor -%}
+  {%- if head.get('value') -%}
     {%- if head.get('value') == 'vimdiff' -%}
       {%- set ingore = head.__setitem__("value", "vim") -%}
     {%- endif -%}
-    {%- set ignore = items.append(head['value']) -%} 
-  {%- endif -%} 
-{%- endmacro -%} 
+    {%- set ignore = items.append(head['value']) -%}
+  {%- endif -%}
+{%- endmacro -%}
 
-{%- set items = [] -%} 
-{%- for tool in external_tools -%} 
-  {{- test_presence(tool, items) -}} 
-{%- endfor -%} 
+{%- set items = [] -%}
+{%- for tool in external_tools -%}
+  {{- test_presence(tool, items) -}}
+{%- endfor -%}
 {{ items }}
-

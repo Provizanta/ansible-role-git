@@ -1,14 +1,35 @@
+---
+
 galaxy_info:
-  author: Tibor Csoka
-  license:  MIT
+  role_name: git
+  author: Tibor Csóka
+  description: |
+    "Install and setup git."
+  company: ""
+
+  license: MIT
 
   min_ansible_version: 2.6
 
   platforms:
-  - name: Ubuntu
-    versions:
-    - all
+    - name: Ubuntu
+      versions:
+        - bionic
+        - cosmic
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+        - jessie
+    - name: Fedora
+      versions:
+        - all
+    - name: EL
+      versions:
+        - 6
+        - 7
 
-  galaxy_tags: ['git']
+  galaxy_tags:
+    - git
 
-dependencies: [] 
+dependencies: []

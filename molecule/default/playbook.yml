@@ -1,0 +1,20 @@
+---
+
+- name: Converge
+  hosts: all
+  roles:
+    - role: git
+      vars:
+        scope: global
+
+  post_tasks:
+    - name: check 'git' presence
+      block:
+        - name: attempt to use 'git' command
+          command: 'git --version'
+          register: r
+        - name: evaluate command presence
+          assert:
+            that:
+              - r.rc == 0
+            fail_msg: "'git' command should be installed"

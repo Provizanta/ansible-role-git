@@ -1,27 +1,27 @@
 ---
 
 - name: establish package
-  become: yes
-  package: 
-    name: git 
-    state: latest
+  become: true
+  package:
+    name: git
+    state: present
   tags: install
 
 - name: establish dependencies enforced by settings
-  become: yes
+  become: true
   package:
     name: "{{ lookup('template', './tools_list.j2') | unique }}"
     state: present
   tags: install
- 
+
 - name: establish global .gitignore
-  when: global_gitignore is defined 
+  when: global_gitignore is defined
   lineinfile:
     line: "{{ item }}"
-    path: "{{ configuration['core']['excludesfile'] | default(lookup('env','HOME') + '/.gitignore_global') }}" 
+    path: "{{ configuration['core']['excludesfile'] | default(lookup('env','HOME') + '/.gitignore_global') }}"
     owner: "{{ ansible_user }}"
     mode: "u=rwx,go=rx"
-    create: yes
+    create: true
   loop: "{{ global_gitignore }}"
   tags: configure
 
@@ -32,4 +32,3 @@
     value: "{{ item['value'] }}"
   loop: "{{ lookup('template', './settings_with_keys_collapsed_to_path.j2') }}"
   tags: configure
-
