@@ -13,11 +13,15 @@ None
 Role Variables
 --------------
 
-Optional variables:
+These variables are defined in [defaults/main.yml](./defaults/main.yml):
 
-    scope: <enum global|local, scope of the git configuration>
-    global_gitignore: <list, lines for the global gitignore file>
-    configuration: <git configuration in YAML format>
+    git_scope: global           # enum: global|local
+
+    git_global_gitignore: []    # global gitignore lines
+
+These variables are not defaulted and can be specified:
+
+    git_configuration:          # dict, configuration in YAML format
 
 Dependencies
 ------------
@@ -27,17 +31,18 @@ None
 Example Playbook
 ----------------
 
-    - hosts: localhost
+    - name: Converge
+      hosts: all
       roles:
-        role: git
-        vars:
-          scope: local
-          configuration:
-            user:
-              name: "Name Surname"
-              email: "name@surname.com"
-            core:
-              editor: vim
+        - role: git
+          vars:
+            git_scope: global
+            git_configuration:
+              user:
+                name: "Name Surname"
+                email: "name@surname.com"
+              core:
+                excludesfile: "/tmp/gitignore"
 
 License
 -------

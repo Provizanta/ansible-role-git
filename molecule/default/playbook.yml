@@ -5,8 +5,11 @@
   roles:
     - role: git
       vars:
-        scope: global
-        configuration:
+        git_scope: global
+        git_configuration:
+          user:
+            name: "Name Surname"
+            email: "name@surname.com"
           core:
             excludesfile: "/tmp/gitignore"
 

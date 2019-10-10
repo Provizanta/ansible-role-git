@@ -1,5 +1,5 @@
 {%- macro test_presence(path, items) -%}
-  {%- set head = { 'value': configuration } -%}
+  {%- set head = { 'value': git_configuration } -%}
   {%- for key in path.split('.') -%}
     {%- set ingore = head.__setitem__("value", head['value'].get(key, {})) -%}
   {%- endfor -%}

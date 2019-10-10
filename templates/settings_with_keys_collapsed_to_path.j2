@@ -9,7 +9,7 @@
 {%- endmacro -%}
 
 {% set pairs = [] -%}
-{%- for key, value in configuration.items() -%}
+{%- for key, value in git_configuration.items() -%}
   {{- collapse(key, value, key, pairs) -}}
 {%- endfor -%}
 {{ pairs }}

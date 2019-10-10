@@ -14,21 +14,38 @@
     state: present
   tags: install
 
-- name: establish global .gitignore
-  when: global_gitignore is defined
-  become: false
-  lineinfile:
-    line: "{{ item }}"
-    path: "{{ configuration['core']['excludesfile'] | default(lookup('env','HOME') + '/.gitignore_global') }}"
-    mode: "u=rwx,go=rx"
-    create: true
-  loop: "{{ global_gitignore }}"
+- name: global .gitignore
+  when:
+    - git_global_gitignore is defined
+    - git_global_gitignore | length > 0
+  block:
+    - name: setup global gitignore path
+      set_fact:
+        git_configuration:
+          "{{ {
+               'core': {
+                 'excludesfile': '%s/.gitignore_global' | format(ansible_env.HOME),
+               },
+             } | combine(git_configuration, recursive=True) }}"
+
+    - name: ensure global gitignore path presence
+      file:
+        path: "{{ git_configuration['core']['excludesfile'] | dirname }}"
+        state: directory
+
+    - name: establish global gitignore file
+      lineinfile:
+        line: "{{ item }}"
+        path: "{{ git_configuration['core']['excludesfile'] }}"
+        mode: "u=rwx,go=rx"
+        create: true
+      loop: "{{ git_global_gitignore }}"
   tags: configure
 
 - name: establish configuration
   git_config:
     name: "{{ item['setting'] }}"
-    scope: "{{ scope }}"
+    scope: "{{ git_scope }}"
     value: "{{ item['value'] }}"
   loop: "{{ lookup('template', './settings_with_keys_collapsed_to_path.j2') }}"
   tags: configure

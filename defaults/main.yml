@@ -1,12 +1,5 @@
 ---
 
-scope: global
+git_scope: global           # enum: global|local
 
-global_gitignore:
-  - "*~"
-  - ".*.swp"
-  - ".DS_Store"
-
-configuration:
-  core:
-    excludesfile: '~/.gitignore_global'
+git_global_gitignore: []    # global gitignore lines
