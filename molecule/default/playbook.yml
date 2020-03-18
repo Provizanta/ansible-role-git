@@ -2,6 +2,12 @@
 
 - name: Converge
   hosts: all
+  pre_tasks:
+    - name: update package manager
+      when: "ansible_pkg_mgr == 'apt'"
+      apt:
+        update_cache: true
+      changed_when: false
   roles:
     - role: git
       vars:
@@ -17,7 +23,7 @@
     - name: check 'git' presence
       block:
         - name: attempt to use 'git' command
-          command: 'git --version'
+          command: 'git --version'  # noqa 303
           changed_when: false
           register: r
         - name: evaluate command presence
