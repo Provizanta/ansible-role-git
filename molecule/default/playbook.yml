@@ -9,7 +9,7 @@
         update_cache: true
       changed_when: false
   roles:
-    - role: git
+    - role: ansible-role-git
       vars:
         git_scope: global
         git_configuration:
