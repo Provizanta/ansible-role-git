@@ -1,17 +1,18 @@
 ---
 
 - name: establish package
-  become: true
+  become: "{{ (ansible_system == 'Linux') | bool }}"
   package:
     name: git
     state: present
   tags: install
 
 - name: establish dependencies enforced by settings
-  become: true
+  become: "{{ (ansible_system == 'Linux') | bool }}"
   package:
     name: "{{ lookup('template', './tools_list.j2') | unique }}"
     state: present
+  failed_when: false
   tags: install
 
 - name: global .gitignore
